@@ -155,9 +155,9 @@ INSERT INTO LIBRARY_BRANCH (BranchName, Address)
 	Select * from BOOKS;
 
 
-	SET IDENTITY_INSERT BOOKS Off  -- Statement Allows explicit values to be inserted into 
+	/*SET IDENTITY_INSERT BOOKS Off  -- Statement Allows explicit values to be inserted into 
                                 -- the identity column of a table.
-    GO
+    GO*/
 
 	INSERT INTO BOOK_COPIES(BookID, BranchID, Number_of_Copies)
 
