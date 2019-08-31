@@ -155,9 +155,9 @@ INSERT INTO LIBRARY_BRANCH (BranchName, Address)
 	Select * from BOOKS;
 
 
-	SET IDENTITY_INSERT BOOKS Off  -- Statement Allows explicit values to be inserted into 
+	/*SET IDENTITY_INSERT BOOKS Off  -- Statement Allows explicit values to be inserted into 
                                 -- the identity column of a table.
-    GO
+    GO*/
 
 	INSERT INTO BOOK_COPIES(BookID, BranchID, Number_of_Copies)
 
@@ -243,7 +243,8 @@ VALUES
 	('Russell Westbrook', 'Houston, Texas', '252-147-3581');
 
 	SELECT * FROM BORROWER,BOOK_LOANS;	
-
+	SELECT * FROM BORROWER; 
+	SELECT * FROM BOOK_LOANS;
 
 INSERT INTO BOOK_LOANS(BookID, BranchID, CardNo, DateOut, DateDue)
 
@@ -411,10 +412,11 @@ EXEC spBranchOne
 
 /*Questions # 5 */
 GO
-CREATE PROC spBranchBooks
+ALTER PROC spBranchBooks
 AS
 SELECT BranchName, COUNT(*) AS NumberOfBooks
-FROM BOOK_COPIES, LIBRARY_BRANCH 
+FROM BOOK_COPIES
+INNER JOIN LIBRARY_BRANCH ON BOOK_COPIES.BranchID = LIBRARY_BRANCH.BranchID
 GROUP BY BranchName;
 GO
 
@@ -422,11 +424,11 @@ EXEC spBranchBooks
 
 /*Questions # 6 */
 GO 
-CREATE PROC spMoreThanFive
+ALTER PROC spMoreThanFive
 AS
 SELECT BORROWER.Name, BORROWER.Address, BORROWER.CardNo
-FROM BOOK_LOANS, BORROWER
-WHERE BORROWER.CardNo = BOOK_LOANS.CardNo
+FROM BOOK_LOANS
+INNER JOIN BORROWER ON BOOK_LOANS.CardNo = BORROWER.CardNo
 GROUP BY BORROWER.Name, BORROWER.Address, BORROWER.CardNo
 HAVING COUNT(*)>5;	
 GO
